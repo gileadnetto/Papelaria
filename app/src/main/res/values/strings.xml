@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">"TccPatrimonio "</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_formulario">Formulario</string>
+    <string name="title_activity_lista">ListaActivity</string>
+    <string name="title_activity_produto">ProdutoActivity</string>
+    <string name="title_activity_busca">BuscaActivity</string>
+    <string name="title_activity_formulario_barra">FormularioBarra</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_manter_tab">ManterTab</string>
+    <string name="title_activity_manter_tab_produto_escola">Manter_tab_produto_escola</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

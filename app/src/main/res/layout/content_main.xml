@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.gilead.tccpatrimonio.MainActivity"
+    tools:showIn="@layout/app_bar_main"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true">
+
+
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="358dp"
+                android:layout_height="match_parent"
+                android:weightSum="1">
+
+                <Button
+                    android:text="Procurar Produto"
+                    android:layout_width="172dp"
+                    android:layout_height="129dp"
+                    android:id="@+id/btnAlocar"
+                    android:paddingTop="3pt"
+                    android:drawableTop="@drawable/icone_lupa"
+                    android:background="#00fff9f9"
+                    android:layout_weight="0.07"
+                    android:onClick="buscarProduto"/>
+
+                <Button
+                    android:text="Procurar Codigo"
+                    android:layout_width="172dp"
+                    android:layout_height="129dp"
+                    android:id="@+id/btnGerenciar"
+                    android:background="#00fff9f9"
+                    android:paddingTop="3pt"
+                    android:drawableTop="@drawable/icone_codigo"
+                    android:onClick="buscarCodigo"
+                    />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="1">
+
+                <Button
+                    android:background="#00fff9f9"
+                    android:text="Gerar PDF"
+                    android:layout_width="172dp"
+                    android:layout_height="139dp"
+                    android:id="@+id/btnTranferir"
+                    android:paddingTop="10pt"
+                    android:drawableTop="@drawable/ic_criarpdf"
+                    android:onClick="criarPdf"
+
+                    />
+
+                <Button
+                    android:background="#00fff9f9"
+                    android:text="Estoque"
+                    android:layout_width="172dp"
+                    android:layout_height="129dp"
+                    android:id="@+id/btnCadastrar"
+                    android:paddingTop="10pt"
+                    android:drawableTop="@drawable/ic_estoque"
+                    android:onClick="estoque"
+                    />
+            </LinearLayout>
+
+            <Button
+                android:background="#00fff9f9"
+                android:text="Exportar"
+                android:layout_width="match_parent"
+                android:layout_height="104dp"
+                android:id="@+id/bntImportar"
+                android:paddingTop="1pt"
+                android:drawableTop="@drawable/icone_banco"
+                android:onClick="importar"
+                />
+
+
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

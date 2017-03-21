@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:clickable="true"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/txtRowProduto"
+        android:text="Produto"
+        android:layout_below="@+id/txtRowCodigo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@+id/btnAddRow" />
+
+    <TextView
+        android:id="@+id/txtRowPreco"
+        android:text="Preço"
+        android:layout_marginLeft="7dp"
+        android:textColor="@color/idColor"
+        android:layout_width="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_height="wrap_content" />
+
+    <ImageButton
+        android:layout_marginTop="2dp"
+        android:id="@+id/btnAddRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="0dp"
+        android:src="@android:drawable/ic_delete"
+        android:background="#00ffffff"
+        android:layout_below="@+id/txtRowPreco"
+        android:layout_alignEnd="@+id/txtRowPreco" />
+
+
+
+    <TextView
+        android:id="@+id/txtRowCodigo"
+        android:text="Codigo"
+        android:textColor="#f28e13b7"
+        android:textSize="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/txtRowEstoque"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="0dp"
+        android:text="Estoque"
+        android:textColor="#f2b73713"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/txtRowPreco" />
+
+
+</RelativeLayout>
