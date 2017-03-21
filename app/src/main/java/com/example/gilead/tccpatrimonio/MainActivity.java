@@ -76,8 +76,8 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    //private static final String BASE_URL = "http://192.168.1.8:8084/ServicosWeb/webresources/produto/";
-    private static final String BASE_URL = "http://192.168.4.3:8080/ServicosWeb/webresources/papelaria/";
+    private static final String BASE_URL = "http://gileadtest.ddns.net:8084/ServicosWeb/webresources/papelaria/";
+    //private static final String BASE_URL = "http://192.168.4.3:8080/ServicosWeb/webresources/papelaria/";
 
 
     DataBaseHelper db;
