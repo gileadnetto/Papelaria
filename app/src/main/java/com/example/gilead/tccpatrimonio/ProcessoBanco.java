@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.gilead.tccpatrimonio.service.EstoqueDec;
 import com.example.gilead.tccpatrimonio.service.ProdutoService;
@@ -25,8 +26,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ProcessoBanco extends AsyncTask<String, Void,String>{
 
     private Context context;
-    ProgressDialog dialog;
+    private ProgressDialog mprogressDialog;
     DataBaseHelper db;
+
     private static final String BASE_URL = "http://192.168.4.3:8084/ServicosWeb/webresources/papelaria/";
 
     public ProcessoBanco(Context contexto) {
@@ -36,91 +38,87 @@ public class ProcessoBanco extends AsyncTask<String, Void,String>{
 @Override
 protected void onPreExecute(){
     //progressDialog.show(context, "Criando PDF", "Criando arquivo PDF, por favor, aguarde alguns instantes.", true, false);
-    dialog = new ProgressDialog(context);
-    dialog.setTitle("Atualizando Banco");
-    dialog.setMessage("Atualizando banco , por favor, aguarde alguns instantes.");
-    dialog.setIndeterminate(true);
-    dialog.show();
+
+    db = new DataBaseHelper(context);
+    mprogressDialog = new ProgressDialog(context);
+    mprogressDialog.setCancelable(true);
+    mprogressDialog.setMessage("Processando...");
+    //define o estilo como horizontal que nesse caso signifca que terá
+    //barra de progressão/contagem
+    mprogressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+    //reseta o progress para zero e em seguida define o valor máximo
+    mprogressDialog.setProgress(0);
+    mprogressDialog.setMax(4000); //esse valor deverá ser definido de acordo com sua necessidade
+    //apresnta o progressbar
+    mprogressDialog.show();
+
         }
 
 
 protected String doInBackground(String... resultado) {
 
+mprogressDialog.incrementProgressBy(991);
+        Gson g = new GsonBuilder().registerTypeAdapter(Estoque.class, new EstoqueDec()).create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(g))
+                .build();
 
-    db = new DataBaseHelper(context);
+        Log.e("Retrofit", "Criou retrofit");
+        ProdutoService service = retrofit.create(ProdutoService.class);
+        Call<ArrayList<Estoque>> produtos = service.getEstoque();
 
-            try{
-
-
-            Gson g = new GsonBuilder().registerTypeAdapter(Estoque.class , new EstoqueDec()).create();
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create(g))
-                    .build();
-            Log.e("Retrofit","Criou retrofit");
-            ProdutoService service = retrofit.create(ProdutoService.class);
-            Call<ArrayList<Estoque>> produtos = service.getEstoque();
-
-          produtos.enqueue(new Callback<ArrayList<Estoque>>() {
+        produtos.enqueue(new Callback<ArrayList<Estoque>>() {
 
 
-                @Override
-                public void onResponse(Call<ArrayList<Estoque>> call, Response<ArrayList<Estoque>> response) {
-                    if(response.isSuccessful()){
+            @Override
+            public void onResponse(Call<ArrayList<Estoque>> call, Response<ArrayList<Estoque>> response) {
+                if (response.isSuccessful()) {
+
+                    ArrayList<Estoque> estoque = response.body();
+                    Log.e("PAssou", " array");
+                    int cont = estoque.size();
+                    mprogressDialog.setMax(cont);
 
 
-                        ArrayList<Estoque> estoque = response.body();
-                        Log.e("PAssou"," array");
-                        int cont= estoque.size();
-                        int progresso = 1;
-                        double porcentagem;
+                    //   Toast.makeText(getApplicationContext(),"Atualizando banco  interno com " + cont +" Produtos" ,Toast.LENGTH_LONG ).show();
+                    for (Estoque prod : estoque) {
 
-                        //   Toast.makeText(getApplicationContext(),"Atualizando banco  interno com " + cont +" Produtos" ,Toast.LENGTH_LONG ).show();
-                        for(Estoque prod:estoque){
+                        Log.e("user", prod.getEan() + "");
 
-                            Log.e("user",prod.getEan()+"");
-
-                             porcentagem = (100*progresso)/cont;
-
-                            dialog.setMessage("Atualizando banco :" + porcentagem + " concluido");
-
-                            Estoque Estoque = new Estoque(prod.getEan(), prod.getProduto(), prod.getFornecedor(),prod.getVenda(),prod.getEstoque());
-                            db.addEstoque(Estoque);
-
-                                progresso++;
-                        }
-                        //  cont--;
-
-
-
-                      //  Toast.makeText(getApplicationContext(),"Adicionado : "+ cont +" Produtos " ,Toast.LENGTH_SHORT ).show();
-
-                    }else{
-
-                        dialog.setMessage("Error : " + response.code());
-                        onPostExecute();
-                      //  Toast.makeText(getApplicationContext(),"Error : " + response.code(),Toast.LENGTH_SHORT ).show();
+                        Estoque Estoque = new Estoque(prod.getEan(), prod.getProduto(), prod.getFornecedor(), prod.getVenda(), prod.getEstoque());
+                        db.addEstoque(Estoque);
+                       mprogressDialog.incrementProgressBy(1);
 
                     }
+                    //  cont--;
+
+
+                    //  Toast.makeText(getApplicationContext(),"Adicionado : "+ cont +" Produtos " ,Toast.LENGTH_SHORT ).show();
+
+                } else {
+
+
+                  //  onPostExecute();
+                      Toast.makeText(context,"Error : " + response.code(),Toast.LENGTH_SHORT ).show();
+
                 }
+            }
 
-                @Override
-                public void onFailure(Call<ArrayList<Estoque>> call, Throwable t) {
-                    //Toast.makeText(getApplicationContext(),"Erro ao conectar no servidor , falha de conexao " + t.getMessage(),Toast.LENGTH_SHORT ).show();
-                    dialog.setMessage("Erro ao Conectar ao servidor");
-                    onPostExecute();
-                }
-
-
-            });
+            @Override
+            public void onFailure(Call<ArrayList<Estoque>> call, Throwable t) {
+                //Toast.makeText(getApplicationContext(),"Erro ao conectar no servidor , falha de conexao " + t.getMessage(),Toast.LENGTH_SHORT ).show();
+                //dialog.setMessage("Erro ao Conectar ao servidor");
+                onPostExecute();
+            }
 
 
+        });
 
 
-        }
-        catch (Exception e){
-        Log.e("AsyncTask", e.getMessage());
-        }
+
+
+
 
    // onPostExecute();
    // dialog.dismiss();
@@ -130,7 +128,7 @@ protected String doInBackground(String... resultado) {
 
 
 protected void onPostExecute(){
-   dialog.dismiss();
+   mprogressDialog.dismiss();
 
 
 
