@@ -41,6 +41,7 @@
 
 package com.example.gilead.tccpatrimonio;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -71,12 +72,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.Manifest.permission.INTERNET;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String BASE_URL = "http://gileadtest.ddns.net:8084/ServicosWeb/webresources/papelaria/";
+    private static final String BASE_URL = "http://192.168.4.3:8084/ServicosWeb/webresources/papelaria/";
     //private static final String BASE_URL = "http://192.168.4.3:8080/ServicosWeb/webresources/papelaria/";
 
 
@@ -93,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
 
-
+        verificarinternet();
 
        // db = new DataBaseHelper(this);
         //dados = new ArrayList<>();
@@ -201,7 +203,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void importar(View v){
 
-       //db.dropar();
+       db.dropar();
+      //  new ProcessoBanco(this).execute();
+
+        ///**
+
+       final ProgressDialog dialog;
+        dialog = new ProgressDialog(this);
+        dialog.setTitle("Atualizando Banco");
+        dialog.setMessage("Atualizando banco , por favor, aguarde alguns instantes.");
+        dialog.setIndeterminate(true);
+        dialog.show();
+
+        //TODO caso contrario
 
         Gson g = new GsonBuilder().registerTypeAdapter(Estoque.class , new EstoqueDec()).create();
         Retrofit retrofit = new Retrofit.Builder()
@@ -224,11 +238,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     ArrayList<Estoque> user = response.body();
                     int cont= user.size();
+                    int progresso = 1;
+                    double porcentagem;
 
                     //   Toast.makeText(getApplicationContext(),"Atualizando banco  interno com " + cont +" Produtos" ,Toast.LENGTH_LONG ).show();
                     for(Estoque prod:user){
 
                         Log.e("user",prod.getEan()+"");
+
+                        porcentagem = (100*progresso)/cont;
+
+                    //    dialog.setMessage("Atualizando banco :" + porcentagem + " concluido");
                             Estoque Estoque = new Estoque(prod.getEan(), prod.getProduto(), prod.getFornecedor(),prod.getVenda(),prod.getEstoque());
                             db.addEstoque(Estoque);
 
@@ -236,8 +256,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         //  cont--;
 
 
-
+                    dialog.setMessage("Adicionado : "+ cont +" Produtos ");
                     Toast.makeText(getApplicationContext(),"Adicionado : "+ cont +" Produtos " ,Toast.LENGTH_SHORT ).show();
+                    dialog.dismiss();
 
                 }else{
                     Toast.makeText(getApplicationContext(),"Error : " + response.code(),Toast.LENGTH_SHORT ).show();}
@@ -250,6 +271,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        //dialog.dismiss();
+      //   **/
     }
 
 
@@ -258,6 +281,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         verificarPermissao();
 
         new Processo(this).execute();
+
         // Processo processo = new Processo(this);
         //processo.execute();
 
@@ -278,6 +302,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             } else {
                 // Solicita a permissão
                 ActivityCompat.requestPermissions(this,new String[]{WRITE_EXTERNAL_STORAGE},0);
+            }
+        } else {
+            // Tudo OK, podemos prosseguir.
+        }
+
+
+
+    }
+
+    private void verificarinternet() {
+        boolean ok = ContextCompat.checkSelfPermission(this,INTERNET) == PackageManager.PERMISSION_GRANTED;
+        // Se não possui permissão
+        if (ContextCompat.checkSelfPermission(this,INTERNET) != PackageManager.PERMISSION_GRANTED) {
+            // Verifica se já mostramos o alerta e o usuário negou na 1ª vez.
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, INTERNET)) {
+                // Caso o usuário tenha negado a permissão anteriormente, e não tenha marcado o check "nunca mais mostre este alerta"
+                // Podemos mostrar um alerta explicando para o usuário porque a permissão é importante.
+            } else {
+                // Solicita a permissão
+                ActivityCompat.requestPermissions(this,new String[]{INTERNET},0);
             }
         } else {
             // Tudo OK, podemos prosseguir.
