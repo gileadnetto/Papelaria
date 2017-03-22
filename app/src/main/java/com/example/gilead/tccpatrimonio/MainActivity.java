@@ -327,7 +327,7 @@ public void importar(View v){
     mprogressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
     //reseta o progress para zero e em seguida define o valor máximo
     mprogressDialog.setProgress(0);
-    mprogressDialog.setMax(4000); //esse valor deverá ser definido de acordo com sua necessidade
+    mprogressDialog.setMax(0); //esse valor deverá ser definido de acordo com sua necessidade
     //apresnta o progressbar
     mprogressDialog.show();
 
@@ -353,17 +353,18 @@ public void importar(View v){
                 ArrayList<Estoque> estoque = response.body();
                 Log.e("PAssou", " array");
                 int cont = estoque.size();
-               // mprogressDialog.setMax(cont);
+                mprogressDialog.setMax(cont);
 
 
                 //   Toast.makeText(getApplicationContext(),"Atualizando banco  interno com " + cont +" Produtos" ,Toast.LENGTH_LONG ).show();
                 for (Estoque prod : estoque) {
 
                     Log.e("user", prod.getEan() + "");
+                    mprogressDialog.incrementProgressBy(1);
 
                     Estoque Estoque = new Estoque(prod.getEan(), prod.getProduto(), prod.getFornecedor(), prod.getVenda(), prod.getEstoque());
                     db.addEstoque(Estoque);
-                    mprogressDialog.incrementProgressBy(1);
+
 
                 }
                 //  cont--;
