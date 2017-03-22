@@ -29,11 +29,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class FilePDFOperations {
     String currentDateTimeString = DateFormat.getDateInstance().format(new Date());
+
 
 
     public FilePDFOperations() {
@@ -43,6 +45,9 @@ public class FilePDFOperations {
 
 
         try {
+            Date date = new Date() ;
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(date);
+            Log.e("Data : ",timeStamp);
 
 
             String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -51,8 +56,6 @@ public class FilePDFOperations {
             //String fpath = "/sdcard/" + fname + ".pdf";
            // File file = new File(fpath);
             File file = new File(Environment.getExternalStorageDirectory(), fname + ".pdf");
-
-            Log.e("--",file.toString());
 
             // If file does not exists, then create it
             if (! file.exists()) {
@@ -80,10 +83,6 @@ public class FilePDFOperations {
            paragraph.setAlignment(Element.ALIGN_CENTER);
            document.add(paragraph);
 
-
-          //  paragraph = new Paragraph("SECRETARIA MUNICIPAL DE EDUCAÇÃO E CULTURA");
-          //  paragraph.setAlignment(Element.ALIGN_CENTER);
-          //  document.add(paragraph);
 
             paragraph = new Paragraph("Data :" + currentDateTimeString);
             paragraph.setAlignment(Element.ALIGN_RIGHT);
