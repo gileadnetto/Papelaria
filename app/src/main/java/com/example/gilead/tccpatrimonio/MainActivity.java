@@ -322,14 +322,10 @@ public void importar(View v){
     mprogressDialog = new ProgressDialog(this);
     mprogressDialog.setCancelable(true);
     mprogressDialog.setMessage("Processando...");
-    //define o estilo como horizontal que nesse caso signifca que terá
-    //barra de progressão/contagem
-    mprogressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-    //reseta o progress para zero e em seguida define o valor máximo
-    mprogressDialog.setProgress(0);
+    mprogressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);//define o estilo como horizontal que nesse caso signifca que terá barra de progressão/contagem
+    mprogressDialog.setProgress(0);//reseta o progress para zero e em seguida define o valor máximo
     mprogressDialog.setMax(0); //esse valor deverá ser definido de acordo com sua necessidade
-    //apresnta o progressbar
-    mprogressDialog.show();
+    mprogressDialog.show();//apresenta o progressbar
 
 
     Gson g = new GsonBuilder().registerTypeAdapter(Estoque.class, new EstoqueDec()).create();
@@ -380,12 +376,16 @@ public void importar(View v){
                 Toast.makeText(MainActivity.this,"Error : " + response.code(),Toast.LENGTH_SHORT ).show();
 
             }
+            if (mprogressDialog.isShowing())
+                mprogressDialog.dismiss();
         }
 
         @Override
         public void onFailure(Call<ArrayList<Estoque>> call, Throwable t) {
             Toast.makeText(getApplicationContext(),"Erro ao conectar no servidor , falha de conexao " + t.getMessage(),Toast.LENGTH_SHORT ).show();
             //dialog.setMessage("Erro ao Conectar ao servidor");
+            if (mprogressDialog.isShowing())
+                mprogressDialog.dismiss();
 
         }
 
