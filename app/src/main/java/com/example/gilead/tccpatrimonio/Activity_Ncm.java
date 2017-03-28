@@ -46,9 +46,9 @@ import static android.Manifest.permission.INTERNET;
 
 public class Activity_Ncm extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    String url = "https://cosmos.bluesoft.com.br/ncms/22021000";
+    String      url;
+    TextView    txv;
 
-    TextView txv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +69,8 @@ public class Activity_Ncm extends AppCompatActivity implements NavigationView.On
 
 
 
-        getDesc();
-        getLogo();
+        //getDesc();
+       // getLogo();
 
         txv = (TextView) findViewById(R.id.searchView);
         //textview com auto search
@@ -91,6 +91,11 @@ public class Activity_Ncm extends AppCompatActivity implements NavigationView.On
                     url = "https://cosmos.bluesoft.com.br/produtos/" + txv.getText();
                     getDesc();
                     getLogo();
+                }
+                else if(query.length() ==8 ){
+                    url = "https://cosmos.bluesoft.com.br/ncms/" + txv.getText();
+                    getDescNcm();
+
                 }
             }
 
@@ -215,10 +220,6 @@ public class Activity_Ncm extends AppCompatActivity implements NavigationView.On
     }
 
 //TODO ____________________________-----------------------------------
-
-
-
-
 
 
 //TODO PEGAR LOGO
@@ -355,6 +356,60 @@ public class Activity_Ncm extends AppCompatActivity implements NavigationView.On
 
         else {
             super.onActivityResult(requestCode, resultCode, data);
+
+        }
+    }
+
+
+
+
+
+    public  void getDescNcm(){
+
+        new DescriptionNcm().execute();
+    }
+
+
+    private class DescriptionNcm extends AsyncTask<Void, Void, Void> {
+
+        String desc;
+        String titulo;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                // Connect to the web site
+                Document document = Jsoup.connect(url).get();
+                // Using Elements to get the Meta data
+
+                //Elements description = document.select("a[id=ncm-main-thumbnail]");
+                // Locate the content attribute
+                //desc = description.attr("content");
+               // titulo = document.title();
+                //titulo = document.tagName();
+
+
+                Elements div = document.select("img[title]");
+                desc = div.attr("title");
+
+              } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            // Set description into TextView
+            TextView txttitle = (TextView) findViewById(R.id.titletxt);
+            TextView txtdesc = (TextView) findViewById(R.id.desctxt);
+
+            txtdesc.setText(desc);
+            txttitle.setText("NCM : " + txv.getText());
 
         }
     }
