@@ -13,7 +13,6 @@
         android:label="Papelaria"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".MainActivity"
             android:label="Papelaria Matheus"
@@ -21,31 +20,31 @@
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
-
         <activity
             android:name=".BuscaActivity"
             android:label="@string/title_activity_busca"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden"
-            />
-
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".BuscaCodigoActivity"
             android:label="Busca por Codigo"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden"/>
-
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Busca_Loja_Activity"
             android:label="Estoque"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
 
+        <activity
+            android:name=".Activity_Ncm"
+            android:label="Pesquisas de Produtos"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
 
     </application>
 

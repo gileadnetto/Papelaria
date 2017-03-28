@@ -91,17 +91,39 @@
                     android:onClick="estoque"
                     />
             </LinearLayout>
-
-            <Button
-                android:background="#00fff9f9"
-                android:text="Exportar"
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="104dp"
-                android:id="@+id/bntImportar"
-                android:paddingTop="1pt"
-                android:drawableTop="@drawable/icone_banco"
-                android:onClick="importar"
-                />
+                android:layout_height="match_parent"
+                android:weightSum="1">
+
+
+
+                <Button
+                    android:background="#00fff9f9"
+                    android:text="Procurar ncm"
+                    android:layout_width="172dp"
+                    android:layout_height="129dp"
+                    android:id="@+id/btnPesquizarNcm"
+                    android:paddingTop="10pt"
+                    android:drawableTop="@drawable/ic_ncm"
+                    android:onClick="getNcm"
+                    />
+
+                <Button
+                    android:background="#00fff9f9"
+                    android:text="Importar"
+                    android:layout_width="172dp"
+                    android:layout_height="139dp"
+                    android:id="@+id/bntImportar"
+                    android:paddingTop="10pt"
+                    android:drawableTop="@drawable/icone_banco"
+                    android:onClick="importar"
+
+                    />
+            </LinearLayout>
+
 
 
 

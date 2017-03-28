@@ -41,7 +41,6 @@
 
 package com.example.gilead.tccpatrimonio;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -65,7 +64,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
-import java.util.logging.Handler;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -81,13 +79,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private static final String BASE_URL = "http://192.168.4.3:8084/ServicosWeb/webresources/papelaria/";
     //private static final String BASE_URL = "http://192.168.4.3:8080/ServicosWeb/webresources/papelaria/";
-
-    private ProgressDialog mprogressDialog;
+    Progress_Msn progresso;
 
 
     DataBaseHelper db;
-
-
 
 
     @Override
@@ -97,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+       progresso =new  Progress_Msn();
 
         verificarinternet();
 
@@ -118,12 +114,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         db = new DataBaseHelper(this); // instanciar para usar a classe DATABASEHelper
-
-
-
-     // Loja loja = new Loja("test", "asdasd", "fdfdsf","dasdsadf",323);
-       //db.addLoja(loja);
-
 
     }
 
@@ -265,9 +255,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void criarPdf(View v){
 
-        verificarPermissao();
+      verificarPermissao();
 
-        new Processo(this).execute();
+       new Processo(this).execute();
+
 
         // Processo processo = new Processo(this);
         //processo.execute();
@@ -317,15 +308,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-public void importar(View v){
-   // new ProcessoBanco(this).execute();
-    mprogressDialog = new ProgressDialog(this);
-    mprogressDialog.setCancelable(true);
-    mprogressDialog.setMessage("Processando...");
-    mprogressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);//define o estilo como horizontal que nesse caso signifca que terá barra de progressão/contagem
-    mprogressDialog.setProgress(0);//reseta o progress para zero e em seguida define o valor máximo
-    mprogressDialog.setMax(0); //esse valor deverá ser definido de acordo com sua necessidade
-    mprogressDialog.show();//apresenta o progressbar
+    public void importar(View v){
+    //db.dropar();
+
+    progresso.iniciarProgesso(this);
+    progresso.setMessage("Conectando");
 
 
     Gson g = new GsonBuilder().registerTypeAdapter(Estoque.class, new EstoqueDec()).create();
@@ -334,39 +321,42 @@ public void importar(View v){
             .addConverterFactory(GsonConverterFactory.create(g))
             .build();
 
-
+        progresso.incrementar(14);
     Log.e("Retrofit", "Criou retrofit");
     ProdutoService service = retrofit.create(ProdutoService.class);
 
-    Call<ArrayList<Estoque>> produtos = service.getEstoque();
-
+    final Call<ArrayList<Estoque>> produtos = service.getEstoque();
+        progresso.incrementar(10);
+        progresso.setMessage("Importando Banco");
     produtos.enqueue(new Callback<ArrayList<Estoque>>() {
 
         @Override
         public void onResponse(Call<ArrayList<Estoque>> call, Response<ArrayList<Estoque>> response) {
 
+
             if (response.isSuccessful()) {
                 ArrayList<Estoque> estoque = response.body();
                 Log.e("PAssou", " array");
                 int cont = estoque.size();
-                mprogressDialog.setMax(cont);
+                progresso.setMax(cont);
 
 
                 //   Toast.makeText(getApplicationContext(),"Atualizando banco  interno com " + cont +" Produtos" ,Toast.LENGTH_LONG ).show();
                 for (Estoque prod : estoque) {
 
                     Log.e("user", prod.getEan() + "");
-                    mprogressDialog.incrementProgressBy(1);
+
 
                     Estoque Estoque = new Estoque(prod.getEan(), prod.getProduto(), prod.getFornecedor(), prod.getVenda(), prod.getEstoque());
                     db.addEstoque(Estoque);
 
+                    progresso.incrementar(1);
 
                 }
                 //  cont--;
+                    progresso.encerrar();
 
-
-                //  Toast.makeText(getApplicationContext(),"Adicionado : "+ cont +" Produtos " ,Toast.LENGTH_SHORT ).show();
+                  Toast.makeText(getApplicationContext(),"Adicionado : "+ cont +" Produtos " ,Toast.LENGTH_LONG ).show();
 
             } else {
 
@@ -374,18 +364,18 @@ public void importar(View v){
                 //  onPostExecute();
 
                 Toast.makeText(MainActivity.this,"Error : " + response.code(),Toast.LENGTH_SHORT ).show();
+                progresso.encerrar();
 
             }
-            if (mprogressDialog.isShowing())
-                mprogressDialog.dismiss();
+
         }
 
         @Override
         public void onFailure(Call<ArrayList<Estoque>> call, Throwable t) {
             Toast.makeText(getApplicationContext(),"Erro ao conectar no servidor , falha de conexao " + t.getMessage(),Toast.LENGTH_SHORT ).show();
             //dialog.setMessage("Erro ao Conectar ao servidor");
-            if (mprogressDialog.isShowing())
-                mprogressDialog.dismiss();
+            progresso.encerrar();
+
 
         }
 
@@ -394,6 +384,10 @@ public void importar(View v){
 
 }
 
+    public void getNcm(View v){
+        Intent it = new Intent(this,Activity_Ncm.class);
+        startActivity(it);
+    }
     }
 
 
