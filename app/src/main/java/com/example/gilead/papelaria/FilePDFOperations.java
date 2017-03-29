@@ -1,4 +1,4 @@
-package com.example.gilead.tccpatrimonio;
+package com.example.gilead.papelaria;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;

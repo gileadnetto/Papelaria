@@ -1,4 +1,4 @@
-package com.example.gilead.tccpatrimonio;
+package com.example.gilead.papelaria;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -6,8 +6,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.gilead.tccpatrimonio.service.EstoqueDec;
-import com.example.gilead.tccpatrimonio.service.ProdutoService;
+import com.example.gilead.papelaria.service.EstoqueDec;
+import com.example.gilead.papelaria.service.ProdutoService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

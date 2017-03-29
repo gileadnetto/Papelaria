@@ -1,6 +1,6 @@
-package com.example.gilead.tccpatrimonio.service;
+package com.example.gilead.papelaria.service;
 
-import com.example.gilead.tccpatrimonio.Estoque;
+import com.example.gilead.papelaria.Estoque;
 
 import java.util.ArrayList;
 

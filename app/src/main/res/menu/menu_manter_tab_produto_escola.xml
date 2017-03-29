@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.gilead.tccpatrimonio.Manter_tab_produto_escola">
+    tools:context="com.example.gilead.papelaria.Manter_tab_produto_escola">
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

@@ -1,4 +1,4 @@
-package com.example.gilead.tccpatrimonio;
+package com.example.gilead.papelaria;
 
 import java.io.Serializable;
 
@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by Gilead on 26/11/2016.
  */
 
-public class Loja  {
+public class Estoque implements Serializable {
 
     private String Ean;
     private String Produto;
@@ -16,7 +16,7 @@ public class Loja  {
     private int ID;
 
 
-    public Loja(String ean, String produto, String fornecedor, String venda, int estoque) {
+    public Estoque(String ean, String produto, String fornecedor, String venda, int estoque) {
         Produto = produto;
         Ean = ean;
         Fornecedor = fornecedor;
@@ -80,7 +80,7 @@ public class Loja  {
     }
 
 
-    public Loja() {
+    public Estoque() {
 
 
     }

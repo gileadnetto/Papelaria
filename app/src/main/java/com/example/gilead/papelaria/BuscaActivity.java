@@ -1,4 +1,4 @@
-package com.example.gilead.tccpatrimonio;
+package com.example.gilead.papelaria;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,7 +26,7 @@ import com.google.zxing.integration.android.IntentResult;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuscaCodigoActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class BuscaActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     String p;
     List<Estoque> data = new ArrayList();
@@ -39,9 +39,9 @@ public class BuscaCodigoActivity extends AppCompatActivity implements Navigation
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_busca_cod);
+        setContentView(R.layout.activity_busca);
 
-        setTitle("Busca por Codigo");
+        setTitle("Busca por Produto");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -75,8 +75,9 @@ public class BuscaCodigoActivity extends AppCompatActivity implements Navigation
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.e("asd",s.toString());
                 String query= s.toString();
-                data = db.getPorCodLike(query);
-                ListaRow_Estoque_Adapter adapter = new ListaRow_Estoque_Adapter(BuscaCodigoActivity.this, data, null, null,null,null,null);
+                data = db.getPorItemLike(query);
+
+                ListaRow_Estoque_Adapter adapter = new ListaRow_Estoque_Adapter(BuscaActivity.this, data, null, null,null,null,null);
                 listaBusca.setAdapter(adapter);
             }
 
@@ -112,6 +113,10 @@ public class BuscaCodigoActivity extends AppCompatActivity implements Navigation
         return true;
     }
 
+
+
+
+
     //Menu de navegação
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -123,21 +128,20 @@ public class BuscaCodigoActivity extends AppCompatActivity implements Navigation
             setTitle("Inicio");
             Intent it = new Intent(this,MainActivity.class);
             startActivity(it);
-           // setContentView(R.layout.activity_main);
+           /// setContentView(R.layout.activity_main);
 
 
         } else if (id == R.id.nav_tela1) {
             setTitle("Busca pod Produto");
             Intent it = new Intent(this,BuscaActivity.class);
             startActivity(it);
-          //  setContentView(R.layout.activity_main);
+           // setContentView(R.layout.activity_main);
 
         } else if (id == R.id.nav_tela2) {
             setTitle("Busca por Codigo");
-            Intent it = new Intent(this,BuscaCodigoActivity.class);
+            Intent it = new Intent(this, BuscaCodigoActivity.class);
             startActivity(it);
-         //   setContentView(R.layout.activity_main);
-
+           // setContentView(R.layout.activity_main);
 
         }
 
@@ -147,12 +151,6 @@ public class BuscaCodigoActivity extends AppCompatActivity implements Navigation
     }
 
 
-
-    private void refreshData(){
-        data = db.getAllProduto();
-        ListaRow_Estoque_Adapter adapter = new ListaRow_Estoque_Adapter(BuscaCodigoActivity.this, data, null, null,null,null,null); //Sem o Onclick
-        listaBusca.setAdapter(adapter);
-    }
 
 
     //acao do qrcode
@@ -165,8 +163,6 @@ public class BuscaCodigoActivity extends AppCompatActivity implements Navigation
         integrator.setBeepEnabled(true);
         integrator.setBarcodeImageEnabled(false);
         integrator.initiateScan();
-
-
     }
 
 
@@ -183,10 +179,18 @@ public class BuscaCodigoActivity extends AppCompatActivity implements Navigation
             }
             else{
                 //Toast.makeText(this,"" + result.getContents() ,Toast.LENGTH_LONG).show();
+                List<Estoque> datas = new ArrayList();
 
-                search.setText(result.getContents());
+              //  search.setText(result.getContents());
 
+                String query= result.getContents().toString();
 
+                Log.e("tipo" ,query);
+
+                datas = db.getPorCodLike(query);
+
+                ListaRow_Estoque_Adapter adapter = new ListaRow_Estoque_Adapter(BuscaActivity.this, datas, null, null,null,null,null);
+                listaBusca.setAdapter(adapter);
             }
         }
 
@@ -199,8 +203,11 @@ public class BuscaCodigoActivity extends AppCompatActivity implements Navigation
 
 
 
-
-
+    private void refreshData(){
+        data = db.getAllProduto();
+        ListaRow_Estoque_Adapter adapter = new ListaRow_Estoque_Adapter(BuscaActivity.this, data, null, null,null,null,null); //Sem o Onclick
+        listaBusca.setAdapter(adapter);
+    }
 
     private void mensagemErro(String mensagem) {
 
@@ -211,6 +218,7 @@ public class BuscaCodigoActivity extends AppCompatActivity implements Navigation
         // dialog.setPositiveButton("Ok");
         dialog.show();
     }
+
 
 }
 

@@ -39,7 +39,7 @@
 
 
 
-package com.example.gilead.tccpatrimonio;
+package com.example.gilead.papelaria;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -58,8 +58,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.gilead.tccpatrimonio.service.EstoqueDec;
-import com.example.gilead.tccpatrimonio.service.ProdutoService;
+import com.example.gilead.papelaria.service.EstoqueDec;
+import com.example.gilead.papelaria.service.ProdutoService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
