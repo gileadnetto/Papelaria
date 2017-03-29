@@ -74,7 +74,6 @@ public class Activity_Ncm extends AppCompatActivity implements NavigationView.On
 
         txv = (TextView) findViewById(R.id.searchView);
         //textview com auto search
-
         txv.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

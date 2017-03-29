@@ -40,7 +40,7 @@ protected String doInBackground(String... resultado) {
 
         try{
 
-            String filename = "Estoque";
+            String filename = "ESTOQUE";
             FilePDFOperations fop = new FilePDFOperations();
             fop.write(filename, dados);
             if (fop.write(filename , dados)) {
