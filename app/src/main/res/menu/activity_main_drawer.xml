@@ -4,16 +4,25 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_inicio"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_aplicativo"
             android:title="Inicio" />
         <item
             android:id="@+id/nav_tela1"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/icone_lupa"
             android:title="Busca Produto" />
         <item
             android:id="@+id/nav_tela2"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_scan"
             android:title="Busca Codigo" />
+        <item
+            android:id="@+id/nav_tela3"
+            android:icon="@drawable/ic_estoque"
+            android:title="Estoque" />
+
+        <item
+            android:id="@+id/nav_tela4"
+            android:icon="@drawable/ic_ncm"
+            android:title="Busca NCM" />
 
     </group>
 

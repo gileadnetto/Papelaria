@@ -52,6 +52,7 @@ public class Busca_Loja_Activity extends AppCompatActivity implements Navigation
         toggle.syncState();
         Log.e("asd","passou 2");
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -115,31 +116,39 @@ public class Busca_Loja_Activity extends AppCompatActivity implements Navigation
 
 
 
-    //Menu de navegação
+    //navegação do menu lateral
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
+        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_inicio) {
-            setTitle("Inicio");
             Intent it = new Intent(this,MainActivity.class);
             startActivity(it);
-           /// setContentView(R.layout.activity_main);
-
 
         } else if (id == R.id.nav_tela1) {
             setTitle("Busca pod Produto");
-            Intent it = new Intent(this,Busca_Loja_Activity.class);
+            Intent it = new Intent(this,BuscaActivity.class);
             startActivity(it);
-           // setContentView(R.layout.activity_main);
+
 
         } else if (id == R.id.nav_tela2) {
             setTitle("Busca por Codigo");
             Intent it = new Intent(this, BuscaCodigoActivity.class);
             startActivity(it);
-           // setContentView(R.layout.activity_main);
+
+
+        } else if (id == R.id.nav_tela3) {
+            setTitle("Estoque");
+            Intent it = new Intent(this, Busca_Loja_Activity.class);
+            startActivity(it);
+
+        } else if (id == R.id.nav_tela4) {
+            setTitle("Busca NCM");
+            Intent it = new Intent(this, Activity_Ncm.class);
+            startActivity(it);
+
 
         }
 

@@ -54,6 +54,7 @@ public class Activity_Ncm extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ncm);
+        this.setTitle("Busca NCM");
 
          Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -65,6 +66,7 @@ public class Activity_Ncm extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -131,31 +133,39 @@ public class Activity_Ncm extends AppCompatActivity implements NavigationView.On
 
 
 
-    //Menu de navegação
+    //navegação do menu lateral
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
+        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_inicio) {
-            setTitle("Inicio");
             Intent it = new Intent(this,MainActivity.class);
             startActivity(it);
-           /// setContentView(R.layout.activity_main);
-
 
         } else if (id == R.id.nav_tela1) {
             setTitle("Busca pod Produto");
-            Intent it = new Intent(this,Activity_Ncm.class);
+            Intent it = new Intent(this,BuscaActivity.class);
             startActivity(it);
-           // setContentView(R.layout.activity_main);
+
 
         } else if (id == R.id.nav_tela2) {
             setTitle("Busca por Codigo");
             Intent it = new Intent(this, BuscaCodigoActivity.class);
             startActivity(it);
-           // setContentView(R.layout.activity_main);
+
+
+        } else if (id == R.id.nav_tela3) {
+            setTitle("Estoque");
+            Intent it = new Intent(this, Busca_Loja_Activity.class);
+            startActivity(it);
+
+        } else if (id == R.id.nav_tela4) {
+            setTitle("Busca NCM");
+            Intent it = new Intent(this, Activity_Ncm.class);
+            startActivity(it);
+
 
         }
 

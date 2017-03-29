@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -151,13 +152,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             setTitle("Busca pod Produto");
             Intent it = new Intent(this,BuscaActivity.class);
             startActivity(it);
-           // setContentView(R.layout.activity_main);
+
 
         } else if (id == R.id.nav_tela2) {
             setTitle("Busca por Codigo");
             Intent it = new Intent(this, BuscaCodigoActivity.class);
             startActivity(it);
-           // setContentView(R.layout.activity_main);
+
+
+        } else if (id == R.id.nav_tela3) {
+        setTitle("Estoque");
+        Intent it = new Intent(this, Busca_Loja_Activity.class);
+        startActivity(it);
+
+        } else if (id == R.id.nav_tela4) {
+            setTitle("Busca NCM");
+            Intent it = new Intent(this, Activity_Ncm.class);
+            startActivity(it);
+
 
         }
 
