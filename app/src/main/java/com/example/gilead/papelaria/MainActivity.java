@@ -208,62 +208,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    public void importarr(View v){
+    public void importar(View v){
 
-       db.dropar();
-
-        //TODO caso contrario
-
-        Gson g = new GsonBuilder().registerTypeAdapter(Estoque.class , new EstoqueDec()).create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(g))
-                .build();
-        Log.e("Cherff","asd");
-        ProdutoService service = retrofit.create(ProdutoService.class);
-        Call<ArrayList<Estoque>> produtos = service.getEstoque();
-
-        Toast.makeText(getApplicationContext(),"Conectando ... ",Toast.LENGTH_SHORT ).show();
-
-        produtos.enqueue(new Callback<ArrayList<Estoque>>() {
-
-
-            @Override
-            public void onResponse(Call<ArrayList<Estoque>> call, Response<ArrayList<Estoque>> response) {
-                if(response.isSuccessful()){
-
-
-                    ArrayList<Estoque> user = response.body();
-                    int cont= user.size();
-
-                    //   Toast.makeText(getApplicationContext(),"Atualizando banco  interno com " + cont +" Produtos" ,Toast.LENGTH_LONG ).show();
-                    for(Estoque prod:user){
-
-                        Log.e("user",prod.getEan()+"");
-
-                            Estoque Estoque = new Estoque(prod.getEan(), prod.getProduto(), prod.getFornecedor(),prod.getVenda(),prod.getEstoque());
-                            db.addEstoque(Estoque);
-
-                        }
-                        //  cont--;
-
-
-                    Toast.makeText(getApplicationContext(),"Adicionado : "+ cont +" Produtos " ,Toast.LENGTH_SHORT ).show();
-
-
-                }else{
-                    Toast.makeText(getApplicationContext(),"Error : " + response.code(),Toast.LENGTH_SHORT ).show();}
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Estoque>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),"Erro ao conectar no servidor , falha de conexao " + t.getMessage(),Toast.LENGTH_SHORT ).show();
-
-            }
-        });
-
-        //dialog.dismiss();
-      //   **/
+        new ProcessoBanco(this).execute();
     }
 
 
@@ -322,10 +269,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    public void importar(View v){
+    public void importarr(View v){
     //db.dropar();
 
-    progresso.iniciarProgesso(this);
+    progresso.iniciarProgresso(this);
     progresso.setMessage("Conectando");
 
 
@@ -357,8 +304,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 //   Toast.makeText(getApplicationContext(),"Atualizando banco  interno com " + cont +" Produtos" ,Toast.LENGTH_LONG ).show();
                 for (Estoque prod : estoque) {
-
-                    Log.e("user", prod.getEan() + "");
+                    Log.e("barra :", prod.getEan() + "");
 
 
                     Estoque Estoque = new Estoque(prod.getEan(), prod.getProduto(), prod.getFornecedor(), prod.getVenda(), prod.getEstoque());

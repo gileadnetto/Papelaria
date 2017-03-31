@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import static java.lang.String.valueOf;
+
 /**
  * Created by Gilead on 27/11/2016.
  */
@@ -79,18 +81,94 @@ public class ListaRow_Estoque_Adapter extends BaseAdapter {
             rowView.setBackgroundColor(Color.rgb(240,240,240));
         }
 
-        rowView.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
 
+
+
+        rowView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity);
+                alertDialog.setTitle("Atualizar Dados");
+                alertDialog.setMessage("Entre com a atualização");
+
+                LinearLayout layout = new LinearLayout(activity);
+                layout.setOrientation(LinearLayout.VERTICAL);
+
+                final EditText ean = new EditText(activity);
+                ean.setHint("Codigo de Barras");
+                ean.setText(lstEstoque.get(posicao).getEan());
+                layout.addView(ean);
+
+                final EditText produto = new EditText(activity);
+                produto.setHint("Produto");
+                produto.setText(lstEstoque.get(posicao).getProduto());
+                layout.addView(produto);
+
+                final EditText preco = new EditText(activity);
+                preco.setHint("Preco");
+                preco.setText(lstEstoque.get(posicao).getVenda());
+                layout.addView(preco);
+
+                final EditText est = new EditText(activity);
+                est.setHint("Estoque");
+                est.setText(valueOf(lstEstoque.get(posicao).getEstoque()));
+                layout.addView(est);
+
+                alertDialog.setView(layout);
+
+                alertDialog.setPositiveButton("Atualizar",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        String query1 = ean.getText().toString();
+                        String query2 = produto.getText().toString();
+                        String query3 = preco.getText().toString();
+                        int query4 = Integer.parseInt(est.getText().toString());
+
+
+
+                        if (query1.isEmpty()==false && query2.isEmpty()==false && query3.isEmpty()==false && query4!=0) {
+
+                            DataBaseHelper db = new DataBaseHelper(activity);
+                            Estoque estoque = new Estoque(query1,query2,lstEstoque.get(posicao).getFornecedor(), query3,query4);
+                            db.updateEstoque(estoque);
+
+                            txtRowCodigo.setText(ean.getText().toString());
+                            txtRowProduto.setText(produto.getText().toString());
+                            txtRowPreco.setText(preco.getText().toString());
+                            txtRowEstoque.setText(est.getText().toString());
+
+
+                            notifyDataSetChanged();
+                        }
+                        else {
+
+                            AlertDialog.Builder dialogo = new AlertDialog.Builder(activity);
+                            dialogo.setTitle("Atenção!");
+                            dialogo.setMessage("Algum Campo Vazio");
+                            dialogo.setNeutralButton("OK", null);
+                            // dialog.setPositiveButton("Ok");
+                            dialogo.show();
+
+                        }
+
+                    }
+
+                });
+
+                alertDialog.setNegativeButton("SAIR",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.cancel();
+                    }
+                });
+
+                alertDialog.show();
+
+
+                return true;
 
             }
-
-
-
-
         });
-
 
         //TODO acção Add  no row
         ImageButton btnDeletarRow = (ImageButton)rowView.findViewById(R.id.btnAddRow);

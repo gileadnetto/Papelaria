@@ -10,7 +10,7 @@ import android.content.Context;
 public class Progress_Msn {
     private ProgressDialog mprogressDialog;
 
-    public void iniciarProgesso(Context com){
+    public void iniciarProgresso(Context com){
         mprogressDialog = new ProgressDialog(com);
         mprogressDialog.setCancelable(true);
         mprogressDialog.setMessage("Processando...");

@@ -11,6 +11,7 @@ import com.example.gilead.papelaria.service.ProdutoService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -25,26 +26,33 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProcessoBanco extends AsyncTask<String, Void,String>{
 
-    private Context context;
-    private ProgressDialog mprogressDialog;
-    DataBaseHelper db;
+    private                         Context context;
+    private                         Progress_Msn progresso;
+    DataBaseHelper                  db;
+    String                          erro;
 
-    private static final String BASE_URL = "http://192.168.4.3:8084/ServicosWeb/webresources/papelaria/";
+   // private static final String BASE_URL = "http://192.168.4.3:8084/ServicosWeb/webresources/papelaria/";
+   private static String      BASE_URL = "http://gileadtest.ddns.net:8084/ServicosWeb/webresources/papelaria/";
+
 
     public ProcessoBanco(Context contexto) {
-        this.context = contexto;
+    this.context = contexto;
     }
 
 @Override
 protected void onPreExecute(){
 
     db = new DataBaseHelper(context);
+    progresso = new Progress_Msn();
+    progresso.iniciarProgresso(context);
+    progresso.setMessage("Iniciando");
 
         }
 
 
 protected String doInBackground(String... resultado) {
 
+                db.dropar();
 
         Gson g = new GsonBuilder().registerTypeAdapter(Estoque.class, new EstoqueDec()).create();
         Retrofit retrofit = new Retrofit.Builder()
@@ -53,59 +61,40 @@ protected String doInBackground(String... resultado) {
                 .build();
 
         Log.e("Retrofit", "Criou retrofit");
-        ProdutoService service = retrofit.create(ProdutoService.class);
+       final  ProdutoService service = retrofit.create(ProdutoService.class);
         Call<ArrayList<Estoque>> produtos = service.getEstoque();
 
-        produtos.enqueue(new Callback<ArrayList<Estoque>>() {
+
+    try {
+
+        ArrayList<Estoque> listaResponse =  produtos.execute().body();
 
 
-            @Override
-            public void onResponse(Call<ArrayList<Estoque>> call, Response<ArrayList<Estoque>> response) {
-                if (response.isSuccessful()) {
+        int cont = listaResponse.size();
 
-                    ArrayList<Estoque> estoque = response.body();
-                    Log.e("PAssou", " array");
-                    int cont = estoque.size();
+        progresso.setMax(cont);
+        for (Estoque prod : listaResponse) {
+            Log.e("barra :", prod.getEan() + "");
+            Estoque Estoque = new Estoque(prod.getEan(), prod.getProduto(), prod.getFornecedor(), prod.getVenda(), prod.getEstoque());
+            db.addEstoque(Estoque);
+            progresso.incrementar(1);
 
-
-                    //   Toast.makeText(getApplicationContext(),"Atualizando banco  interno com " + cont +" Produtos" ,Toast.LENGTH_LONG ).show();
-                    for (Estoque prod : estoque) {
-
-                        Log.e("user", prod.getEan() + "");
-
-                        Estoque Estoque = new Estoque(prod.getEan(), prod.getProduto(), prod.getFornecedor(), prod.getVenda(), prod.getEstoque());
-                        db.addEstoque(Estoque);
+        }
+        onPostExecute();
 
 
-                    }
-                    //  cont--;
+    } catch (IOException e) {
+       Log.e("Erro",e.toString());
+       erro = e.toString();
 
 
-                    //  Toast.makeText(getApplicationContext(),"Adicionado : "+ cont +" Produtos " ,Toast.LENGTH_SHORT ).show();
+       // progresso.setMessage("Error :" + erro );
 
-                } else {
-
-
-                  //  onPostExecute();
-                      Toast.makeText(context,"Error : " + response.code(),Toast.LENGTH_SHORT ).show();
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Estoque>> call, Throwable t) {
-                //Toast.makeText(getApplicationContext(),"Erro ao conectar no servidor , falha de conexao " + t.getMessage(),Toast.LENGTH_SHORT ).show();
-                //dialog.setMessage("Erro ao Conectar ao servidor");
                 onPostExecute();
-            }
 
 
-        });
-
-
-
-
-
+        e.printStackTrace();
+    }
 
    // onPostExecute();
    // dialog.dismiss();
@@ -115,11 +104,7 @@ protected String doInBackground(String... resultado) {
 
 
 protected void onPostExecute(){
-   mprogressDialog.dismiss();
+    progresso.encerrar();
 
-
-
-   // Log.e("sd==",resultado);
-   // Toast.makeText(context, "I/O error",Toast.LENGTH_SHORT).show();
         }
         }
