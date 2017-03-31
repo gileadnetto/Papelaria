@@ -77,9 +77,9 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String BASE_URL = "http://192.168.4.3:8084/ServicosWeb/webresources/papelaria/";
-    //private static final String BASE_URL = "http://192.168.4.3:8080/ServicosWeb/webresources/papelaria/";
-    Progress_Msn progresso;
+   //private static final String     BASE_URL = "http://192.168.4.3:8084/ServicosWeb/webresources/papelaria/";
+    private static final String      BASE_URL = "http://gileadtest.ddns.net:8084/ServicosWeb/webresources/papelaria/";
+    Progress_Msn                     progresso;
 
 
     DataBaseHelper db;
@@ -91,8 +91,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.ic_aplicativo);
 
-       progresso =new  Progress_Msn();
+       progresso = new  Progress_Msn();
 
         verificarinternet();
 

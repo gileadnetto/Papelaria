@@ -35,7 +35,7 @@
                 android:ems="10"
                 android:id="@+id/searchView"
                 android:background="@drawable/screen_border"
-                android:inputType="number" />
+                android:inputType="numberDecimal" />
 
             <Button
                 android:background="#00fff9f9"

@@ -26,6 +26,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     private static final String TABLE_NAME_LOJA = "Loja";
 
+    private static final String KEY_ID = "id";
+
 
 
     public DataBaseHelper(Context context ) {
@@ -38,7 +40,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         String CREATE_TABLE_PAPELARIA = "CREATE TABLE " + TABLE_NAME + "("
-                    +KEY_EAN +" TEXT PRIMARY KEY,"
+                    +KEY_ID +" INT PRIMARY KEY ,"
+                    +KEY_EAN +" TEXT ,"
                     +KEY_PRODUTO+" TEXT,"
                     +KEY_FORNECEDOR+" TEXT,"
                     +KEY_VENDA+ " TEXT ,"
@@ -46,7 +49,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
         String CREATE_TABLE_LOJA = "CREATE TABLE " + TABLE_NAME_LOJA + "("
-                +KEY_EAN +" TEXT PRIMARY KEY,"
+                +KEY_ID +" INT PRIMARY KEY ,"
+                +KEY_EAN +" TEXT ,"
                 +KEY_PRODUTO+" TEXT,"
                 +KEY_FORNECEDOR+" TEXT,"
                 +KEY_VENDA+ " TEXT ,"
@@ -118,11 +122,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                Estoque estoque = new Estoque();
 
 
-               estoque.setEan(cursor.getString(0));
-               estoque.setProduto(cursor.getString(1));
-               estoque.setFornecedor(cursor.getString(2));
-                estoque.setVenda(cursor.getString(3));
-               estoque.setEstoque(cursor.getInt(4));
+               estoque.setEan(cursor.getString(1));
+               estoque.setProduto(cursor.getString(2));
+               estoque.setFornecedor(cursor.getString(3));
+                estoque.setVenda(cursor.getString(4));
+               estoque.setEstoque(cursor.getInt(5));
 
 
                 lstEstoque.add(estoque);
@@ -147,7 +151,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
 
             do{
-                if(query == cursor.getString(0)){
+                if(query == cursor.getString(1)){
                     return true;
                 }
 
@@ -260,11 +264,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 Loja loja = new Loja();
 
 
-                loja.setEan(cursor.getString(0));
-                loja.setProduto(cursor.getString(1));
-                loja.setFornecedor(cursor.getString(2));
-                loja.setVenda(cursor.getString(3));
-                loja.setEstoque(cursor.getInt(4));
+                loja.setEan(cursor.getString(1));
+                loja.setProduto(cursor.getString(2));
+                loja.setFornecedor(cursor.getString(3));
+                loja.setVenda(cursor.getString(4));
+                loja.setEstoque(cursor.getInt(5));
 
 
                 lstloja.add(loja);
@@ -325,7 +329,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
 
             do{
-                if(query.equals(cursor.getString(0))){
+                if(query.equals(cursor.getString(1))){
                     return true;
                 }
 
@@ -347,11 +351,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
             do{
 
-                pdfDados.add(cursor.getString(0));
                 pdfDados.add(cursor.getString(1));
                 pdfDados.add(cursor.getString(2));
                 pdfDados.add(cursor.getString(3));
-                pdfDados.add(String.valueOf(cursor.getInt(4)));
+                pdfDados.add(cursor.getString(4));
+                pdfDados.add(String.valueOf(cursor.getInt(5)));
             }
             while(cursor.moveToNext());
 
