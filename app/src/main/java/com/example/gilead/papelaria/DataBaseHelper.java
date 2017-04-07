@@ -363,6 +363,23 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return pdfDados;
     }
 
+    public int updateLoja(Loja loja){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values= new ContentValues();
+        values.put(KEY_EAN, loja.getEan());
+        values.put(KEY_PRODUTO, loja.getProduto());
+        values.put(KEY_FORNECEDOR, loja.getFornecedor());
+        values.put(KEY_VENDA, loja.getVenda());
+        values.put(KEY_ESTOQUE, loja.getEstoque());
+
+
+        return db.update(TABLE_NAME_LOJA , values,KEY_EAN+ " =?" , new String[]{String.valueOf(loja.getEan())});
+
+
+    }
+
+
 
 }
 

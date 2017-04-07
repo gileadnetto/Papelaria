@@ -31,8 +31,8 @@ public class ProcessoBanco extends AsyncTask<String, Void,String>{
     DataBaseHelper                  db;
     String                          erro;
 
-   // private static final String BASE_URL = "http://192.168.4.3:8084/ServicosWeb/webresources/papelaria/";
-   private static String      BASE_URL = "http://gileadtest.ddns.net:8084/ServicosWeb/webresources/papelaria/";
+    private static final String BASE_URL = "http://192.168.4.3:8084/ServicosWeb/webresources/papelaria/";
+   //private static String      BASE_URL = "http://gileadtest.ddns.net:8084/ServicosWeb/webresources/papelaria/";
 
 
     public ProcessoBanco(Context contexto) {
@@ -61,40 +61,43 @@ protected String doInBackground(String... resultado) {
                 .build();
 
         Log.e("Retrofit", "Criou retrofit");
+
        final  ProdutoService service = retrofit.create(ProdutoService.class);
-        Call<ArrayList<Estoque>> produtos = service.getEstoque();
 
 
-    try {
-
-        ArrayList<Estoque> listaResponse =  produtos.execute().body();
+         Call<ArrayList<Estoque>> produtos = service.getEstoque();
 
 
-        int cont = listaResponse.size();
+                try {
 
-        progresso.setMax(cont);
-        for (Estoque prod : listaResponse) {
-            Log.e("barra :", prod.getEan() + "");
-            Estoque Estoque = new Estoque(prod.getEan(), prod.getProduto(), prod.getFornecedor(), prod.getVenda(), prod.getEstoque());
-            db.addEstoque(Estoque);
-            progresso.incrementar(1);
+                    ArrayList<Estoque> listaResponse =  produtos.execute().body();
 
-        }
-        onPostExecute();
+                    int cont = listaResponse.size();
 
+                    progresso.setMax(cont);
+                    for (Estoque prod : listaResponse) {
+                        Log.e("barra :", prod.getEan() + "");
+                        Estoque estoque = new Estoque(prod.getEan(), prod.getProduto(), prod.getFornecedor(), prod.getVenda(), prod.getEstoque());
+                        db.addEstoque(estoque);
+                        progresso.incrementar(1);
 
-    } catch (IOException e) {
-       Log.e("Erro",e.toString());
-       erro = e.toString();
-
-
-       // progresso.setMessage("Error :" + erro );
-
-                onPostExecute();
+                    }
+                    onPostExecute();
 
 
-        e.printStackTrace();
-    }
+                } catch (IOException e) {
+                   Log.e("Erro",e.toString());
+                   erro = e.toString();
+
+                   // progresso.setMessage("Error :" + erro );
+
+                            onPostExecute();
+
+
+                    e.printStackTrace();
+                }
+
+
 
    // onPostExecute();
    // dialog.dismiss();

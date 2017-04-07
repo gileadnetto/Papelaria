@@ -38,6 +38,7 @@ public class ListaRow_Loja_Adapter extends BaseAdapter {
         this.edtVenda = edtVenda;
         this.edtFornecedor = edtFornecedor;
         this.edtEstoque = edtEstoque;
+
     }
 
     @Override
@@ -70,11 +71,11 @@ public class ListaRow_Loja_Adapter extends BaseAdapter {
         txtRowEstoque = (TextView)rowView.findViewById(R.id.txtRowEstoque);
 
 
-        txtRowCodigo.setText(""+ lstLoja.get(posicao).getEan());
-        txtRowProduto.setText(""+ lstLoja.get(posicao).getProduto());
+        txtRowCodigo.setText(String.valueOf(lstLoja.get(posicao).getEan()));
+        txtRowProduto.setText(String.valueOf(lstLoja.get(posicao).getProduto()));
       //  txtRowFornecedor.setText(""+ lstLoja.get(posicao).getFornecedor());
-        txtRowPreco.setText(""+ lstLoja.get(posicao).getVenda());
-        txtRowEstoque.setText(""+ lstLoja.get(posicao).getEstoque());
+        txtRowPreco.setText(String.valueOf(lstLoja.get(posicao).getVenda()));
+        txtRowEstoque.setText(String.valueOf(lstLoja.get(posicao).getEstoque()));
 
         if(posicao % 2 == 0){
             rowView.setBackgroundColor(Color.rgb(240,240,240));
@@ -126,8 +127,8 @@ public class ListaRow_Loja_Adapter extends BaseAdapter {
                         if (query1.isEmpty()==false && query2.isEmpty()==false && query3.isEmpty()==false && query4!=0) {
 
                             DataBaseHelper db = new DataBaseHelper(activity);
-                            Estoque estoque = new Estoque(query1,query2,lstLoja.get(posicao).getFornecedor(), query3,query4);
-                            db.updateEstoque(estoque);
+                            Loja loja = new Loja(query1,query2,lstLoja.get(posicao).getFornecedor(), query3,query4);
+                            db.updateLoja(loja);
 
                             txtRowCodigo.setText(ean.getText().toString());
                             txtRowProduto.setText(produto.getText().toString());
