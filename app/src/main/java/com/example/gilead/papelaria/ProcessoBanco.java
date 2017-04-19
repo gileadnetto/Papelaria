@@ -45,7 +45,7 @@ protected void onPreExecute(){
     db = new DataBaseHelper(context);
     progresso = new Progress_Msn();
     progresso.iniciarProgresso(context);
-    progresso.setMessage("Iniciando");
+    progresso.setMessage("Conectando ao Banco");
 
         }
 
@@ -75,6 +75,7 @@ protected String doInBackground(String... resultado) {
                     int cont = listaResponse.size();
 
                     progresso.setMax(cont);
+                   // progresso.setMessage("Baixando Banco");
                     for (Estoque prod : listaResponse) {
                         Log.e("barra :", prod.getEan() + "");
                         Estoque estoque = new Estoque(prod.getEan(), prod.getProduto(), prod.getFornecedor(), prod.getVenda(), prod.getEstoque());
