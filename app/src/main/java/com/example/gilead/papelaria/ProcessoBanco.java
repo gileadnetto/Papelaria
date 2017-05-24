@@ -31,8 +31,8 @@ public class ProcessoBanco extends AsyncTask<String, Void,String>{
     DataBaseHelper                  db;
     String                          erro;
 
-    private static final String BASE_URL = "http://192.168.4.3:8084/ServicosWeb/webresources/papelaria/";
-   //private static String      BASE_URL = "http://gileadtest.ddns.net:8084/ServicosWeb/webresources/papelaria/";
+    //private static final String BASE_URL = "http://192.168.4.3:8084/ServicosWeb/webresources/papelaria/";
+   private static String      BASE_URL = "http://gileadtest.ddns.net:8084/ServicosWeb/webresources/papelaria/";
 
 
     public ProcessoBanco(Context contexto) {

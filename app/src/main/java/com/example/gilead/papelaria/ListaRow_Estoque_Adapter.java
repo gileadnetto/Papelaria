@@ -242,4 +242,6 @@ public class ListaRow_Estoque_Adapter extends BaseAdapter {
 
         return rowView;
     }
+
+
 }

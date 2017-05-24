@@ -6,4 +6,5 @@
     <color name="year">#999999</color>
     <color name="idColor">#c60748</color>
     <color name="title">#222222</color>
+    <color name="transparente">#00FFFFFF</color>
 </resources>
