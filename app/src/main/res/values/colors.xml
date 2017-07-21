@@ -7,4 +7,5 @@
     <color name="idColor">#c60748</color>
     <color name="title">#222222</color>
     <color name="transparente">#00FFFFFF</color>
+    <color name="white">#f5f1f1</color>
 </resources>

@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setIcon(R.drawable.ic_aplicativo);
 
-       progresso = new  Progress_Msn();
+        progresso = new  Progress_Msn();
 
         verificarinternet();
 
@@ -209,6 +209,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     public void importar(View v){
+        verificarinternet();
 
         new ProcessoBanco(this).execute();
     }
@@ -230,6 +231,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //metodo para dar a permição Write
     private void verificarPermissao() {
+
         boolean ok = ContextCompat.checkSelfPermission(this, WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
         // Se não possui permissão
         if (ContextCompat.checkSelfPermission(this,WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -250,7 +252,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void verificarinternet() {
+
         boolean ok = ContextCompat.checkSelfPermission(this,INTERNET) == PackageManager.PERMISSION_GRANTED;
+        Log.e("permicao interntet " , ok+ "");
         // Se não possui permissão
         if (ContextCompat.checkSelfPermission(this,INTERNET) != PackageManager.PERMISSION_GRANTED) {
             // Verifica se já mostramos o alerta e o usuário negou na 1ª vez.
@@ -345,8 +349,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 }
 
     public void getNcm(View v){
-        Intent it = new Intent(this,Activity_Ncm.class);
+        Intent it = new Intent(this,CadastroActivity.class);
         startActivity(it);
+
+        //Intent it = new Intent(this,Activity_Ncm.class);
+       // startActivity(it);
     }
     }
 

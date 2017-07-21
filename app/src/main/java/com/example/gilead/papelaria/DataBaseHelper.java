@@ -329,7 +329,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
 
             do{
-                if(query.equals(cursor.getString(1))){
+                if(query.equals(cursor.getString(0))){
                     return true;
                 }
 

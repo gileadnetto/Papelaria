@@ -32,7 +32,10 @@ public class ProcessoBanco extends AsyncTask<String, Void,String>{
     String                          erro;
 
     //private static final String BASE_URL = "http://192.168.4.3:8084/ServicosWeb/webresources/papelaria/";
-   private static String      BASE_URL = "http://gileadtest.ddns.net:8084/ServicosWeb/webresources/papelaria/";
+    //private static String      BASE_URL = "http://192.168.4.3:8084/Api/aplicacao/papelaria/";
+    private static String      BASE_URL = "http://tcchost.ddns.net:8084/Api/aplicacao/papelaria/";
+
+    // private static String      BASE_URL = "http://tcchost.ddns.net:8084/Api/aplicacao/papelaria/";
 
 
     public ProcessoBanco(Context contexto) {

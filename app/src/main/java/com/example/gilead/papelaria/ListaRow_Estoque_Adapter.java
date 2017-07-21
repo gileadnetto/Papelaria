@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -84,9 +85,9 @@ public class ListaRow_Estoque_Adapter extends BaseAdapter {
 
 
 
-        rowView.setOnLongClickListener(new View.OnLongClickListener() {
+        rowView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View v) {
+            public void onClick(View v) {
 
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity);
                 alertDialog.setTitle("Atualizar Dados");
@@ -137,8 +138,18 @@ public class ListaRow_Estoque_Adapter extends BaseAdapter {
                             txtRowPreco.setText(preco.getText().toString());
                             txtRowEstoque.setText(est.getText().toString());
 
+                           // txtRowCodigo.setText(query1);
+                           // txtRowProduto.setText(query2);
+                           // txtRowPreco.setText(query3);
+                           // txtRowEstoque.setText(query4);
 
+                            lstEstoque.remove(pos);
                             notifyDataSetChanged();
+                            lstEstoque.add(pos,estoque);
+                            notifyDataSetChanged();
+
+                            addProduto(posicao);
+
                         }
                         else {
 
@@ -165,7 +176,7 @@ public class ListaRow_Estoque_Adapter extends BaseAdapter {
                 alertDialog.show();
 
 
-                return true;
+
 
             }
         });
@@ -175,51 +186,21 @@ public class ListaRow_Estoque_Adapter extends BaseAdapter {
         btnDeletarRow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 final DataBaseHelper db = new DataBaseHelper(activity);
-
-
-                boolean resultado =db.buscaLoja(lstEstoque.get(posicao).getEan());
+                boolean resultado = db.buscaLoja(lstEstoque.get(posicao).getEan());
                 Log.e("Resultado" , resultado + "");
 
                 if (resultado==false) {
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-
-                    builder.setTitle("Adicionar !!!");
-                    builder.setMessage("Deseja Adicionar o Produto no Estoque");
-
-                    builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int which) {
-                            Log.e("EAN ",lstEstoque.get(posicao).getEan());
-
-                                Loja loja = new Loja(lstEstoque.get(posicao).getEan(), lstEstoque.get(posicao).getProduto(), lstEstoque.get(posicao).getFornecedor(), lstEstoque.get(posicao).getVenda(), lstEstoque.get(posicao).getEstoque());
-                                db.addLoja(loja);
-
-                            dialog.dismiss();
-                        }
-                    });
-
-                    builder.setNegativeButton("Nao", new DialogInterface.OnClickListener() {
-
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            // Do nothing
-                            dialog.dismiss();
-                        }
-                    });
-
-                    AlertDialog alert = builder.create();
-                    alert.show();
+                  Loja loja = new Loja(lstEstoque.get(posicao).getEan(), lstEstoque.get(posicao).getProduto(), lstEstoque.get(posicao).getFornecedor(), lstEstoque.get(posicao).getVenda(), lstEstoque.get(posicao).getEstoque());
+                  db.addLoja(loja);
+                  Toast.makeText(activity,"Adicionado no Estoque",Toast.LENGTH_SHORT ).show();
 
 
 
-
-
-                }
-
-                else{
+                       } else{
 
 
                         AlertDialog.Builder dialog2 = new AlertDialog.Builder(activity);
@@ -232,6 +213,7 @@ public class ListaRow_Estoque_Adapter extends BaseAdapter {
                 }
 
                 notifyDataSetChanged();
+
                 //   notes.notifyDataSetChanged();
                 // atualizaLista(lstProduto);
 
@@ -241,6 +223,36 @@ public class ListaRow_Estoque_Adapter extends BaseAdapter {
 
 
         return rowView;
+    }
+
+    private void addProduto(int posicao) {
+        final DataBaseHelper db = new DataBaseHelper(activity);
+        boolean resultado =db.buscaLoja(lstEstoque.get(posicao).getEan());
+        Log.e("Resultado" , resultado + "");
+
+        if (resultado==false) {
+
+            Loja loja = new Loja(lstEstoque.get(posicao).getEan(), lstEstoque.get(posicao).getProduto(), lstEstoque.get(posicao).getFornecedor(), lstEstoque.get(posicao).getVenda(), lstEstoque.get(posicao).getEstoque());
+            db.addLoja(loja);
+            Toast.makeText(activity,"Adicionado no Estoque",Toast.LENGTH_SHORT ).show();
+
+
+        } else{
+
+
+            AlertDialog.Builder dialog2 = new AlertDialog.Builder(activity);
+            dialog2.setTitle("Atenção!");
+            dialog2.setMessage("Produto Ja Cadastrado");
+            dialog2.setNeutralButton("OK", null);
+            dialog2.show();
+
+
+        }
+
+        notifyDataSetChanged();
+        //   notes.notifyDataSetChanged();
+        // atualizaLista(lstProduto);
+
     }
 
 

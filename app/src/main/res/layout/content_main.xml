@@ -102,12 +102,12 @@
 
                 <Button
                     android:background="#00fff9f9"
-                    android:text="Procurar ncm"
+                    android:text="Cadastrar"
                     android:layout_width="172dp"
                     android:layout_height="129dp"
                     android:id="@+id/btnPesquizarNcm"
                     android:paddingTop="10pt"
-                    android:drawableTop="@drawable/ic_ncm"
+                    android:drawableTop="@drawable/ic_cadastro2"
                     android:onClick="getNcm"
                     />
 

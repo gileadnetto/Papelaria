@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_busca"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="0dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.gilead.papelaria.BuscaActivity"
+    tools:showIn="@layout/app_bar_cadastro">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:id="@+id/layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/logo"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="20dp"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/btn_escanear"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:background="#de228d"
+                android:text="Escanear COD"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:layout_marginBottom="20dp"
+                android:onClick="escanear"
+
+                />
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/title">
+                <EditText
+                    android:id="@+id/input_codigo"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:inputType="numberDecimal"
+                    android:hint="Codigo de Barras"
+                    android:drawablePadding="-30dp"
+                    android:layout_marginBottom="6dp"
+                    android:textColor="@color/title"
+                    android:singleLine="true"
+                    android:textSize="18sp"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/title">
+                <EditText
+                    android:id="@+id/input_produto"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+
+                    android:hint="Produto"
+                    android:drawablePadding="-30dp"
+                    android:layout_marginBottom="6dp"
+                    android:textColor="@color/title"
+                    android:singleLine="true"
+                    android:textSize="18sp"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/title">
+                <EditText
+                    android:id="@+id/input_preco"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:inputType="numberDecimal"
+
+                    android:hint="Preço"
+                    android:drawablePadding="-30dp"
+                    android:layout_marginBottom="6dp"
+                    android:textColor="@color/title"
+                    android:singleLine="true"
+                    android:textSize="18sp"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/title">
+
+                <EditText
+                    android:id="@+id/input_quantidade"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:inputType="numberDecimal"
+
+
+                    android:hint="Quantidade"
+                    android:drawablePadding="-30dp"
+                    android:layout_marginBottom="6dp"
+                    android:textColor="@color/title"
+                    android:singleLine="true"
+                    android:textSize="18sp"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+
+
+
+            <Button
+                android:id="@+id/btn_cadastrar2"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:background="#2299de"
+                android:text="Cadastrar"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:layout_marginBottom="20dp"
+                android:onClick="cadastrarProduto"
+
+                />
+
+
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</RelativeLayout>
